@@ -1,28 +1,21 @@
 # Subl
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/subl`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Provides `subl` command within `irb`.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'subl'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install subl
+Add `require 'subl'` within your `~/.irbrc`
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+subl "/path/to/file"  # => open the given file path
+subl "foo.rb", 23     # => open foo.rb on line 23
+subl :rake            # => open gem
+subl Foo.method(:bar) # => open source_location of the given method
+subl Foo              # => open class/module definition
+subl /baz/            # => open method definition of current context
+```
 
 ## Development
 
@@ -30,7 +23,6 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
+## Contributions
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/subl.
-
+Thanks @janosch-x for the additions!
