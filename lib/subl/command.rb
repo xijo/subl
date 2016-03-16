@@ -1,11 +1,11 @@
 module Subl
   class Command
-    attr_accessor :candidate, :line, :origial_binding
+    attr_accessor :candidate, :line, :original_binding
 
     def initialize(candidate:, line: nil, binding: nil)
-      @candidate       = candidate
-      @line            = line
-      @origial_binding = binding
+      self.candidate        = candidate
+      self.line             = line
+      self.original_binding = binding
     end
 
     def call
@@ -21,10 +21,18 @@ module Subl
     def path
       case candidate
       when String        then candidate
-      when Symbol        then resolve_gem(candidate.to_s)
+      when Symbol        then resolve_symbol(candidate)
       when Class, Module then resolve_class(candidate)
       when Method        then resolve_method(candidate)
       when Regexp        then resolve_regexp(candidate)
+      end
+    end
+
+    def resolve_symbol(name)
+      if original_binding.class.in?([Object, NilClass])
+        resolve_gem(name)
+      else
+        resolve_regexp(/^#{name}$/) 
       end
     end
 
@@ -50,9 +58,9 @@ module Subl
       resolve_method(klass.instance_method(m))
     end
 
-    def resolve_regexp(r)
-      m = origial_binding.methods.grep(r).first or return
-      resolve_method(origial_binding.method(m))
+    def resolve_regexp(regexp)
+      m = original_binding&.receiver.methods.grep(regexp).first or return
+      resolve_method(original_binding.receiver.method(m))
     end
 
     def resolve_gem(name)
