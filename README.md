@@ -1,10 +1,10 @@
 # Subl
 
-Provides `subl` command within `irb`.
+Provides `subl` command within `irb` or `pry`.
 
 ## Installation
 
-Add `require 'subl'` within your `~/.irbrc`
+Add `require 'subl'` to your `~/.irbrc` or `~/.pryrc`.
 
 ## Usage
 
