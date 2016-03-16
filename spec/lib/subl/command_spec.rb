@@ -46,12 +46,12 @@ describe Subl::Command do
   end
 
   describe '#resolve_regexp' do
-    it 'returns nil if no binding was given' do
+    it 'returns nil if binding has no matching method' do
       expect(command.resolve_regexp(/gem/)).to eq nil
     end
 
     it 'returns path if binding has matching method' do
-      command.origial_binding = binding
+      command.original_binding = binding
       expect(command.resolve_regexp(/should/)).to include '/rspec/'
     end
   end
