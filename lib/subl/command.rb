@@ -21,10 +21,18 @@ module Subl
     def path
       case candidate
       when String        then candidate
-      when Symbol        then resolve_gem(candidate.to_s)
+      when Symbol        then resolve_symbol(candidate)
       when Class, Module then resolve_class(candidate)
       when Method        then resolve_method(candidate)
       when Regexp        then resolve_regexp(candidate)
+      end
+    end
+
+    def resolve_symbol(name)
+      if original_binding.class.in?([Object, NilClass])
+        resolve_gem(name)
+      else
+        resolve_regexp(/^#{name}$/) 
       end
     end
 

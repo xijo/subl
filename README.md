@@ -9,12 +9,13 @@ Add `require 'subl'` to your `~/.irbrc` or `~/.pryrc`.
 ## Usage
 
 ```ruby
-subl "/path/to/file"  # => open the given file path
-subl "foo.rb", 23     # => open foo.rb on line 23
+subl '/path/to/file'  # => open the given file path
+subl 'foo.rb', 23     # => open foo.rb on line 23
 subl :rake            # => open gem
 subl Foo.method(:bar) # => open source_location of the given method
 subl Foo              # => open class/module definition
-subl /baz/            # => open method definition of current context
+MyClass.subl :bar     # => open method definition
+MyClass.subl /baz/    # => open first matching method definition
 ```
 
 ## Development
