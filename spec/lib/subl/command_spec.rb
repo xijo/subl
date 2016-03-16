@@ -43,6 +43,10 @@ describe Subl::Command do
     it 'returns path if source location is available' do
       expect(command.resolve_method(C.new.method(:foo))).to end_with 'subl/spec/spec_helper.rb'
     end
+
+    it 'returns path if instance_method source location is available' do
+      expect(command.resolve_method(C.instance_method(:foo))).to end_with 'subl/spec/spec_helper.rb'
+    end
   end
 
   describe '#resolve_regexp' do
