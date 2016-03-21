@@ -3,8 +3,39 @@ require 'spec_helper'
 describe Subl::Command do
   let(:command) { Subl::Command.new(candidate: :foo) }
 
+  describe '#resolve_symbol' do
+    let(:command) { Subl::Command.new(candidate: :foo, binding: binding) }
+
+    context 'if called without a binding' do
+      let(:binding) { nil }
+
+      it 'delegates to #resolve_gem' do
+        expect(command).to receive(:resolve_gem)
+        command.resolve_symbol(:foo)
+      end
+    end
+
+    context 'if called with a binding to the main Object' do
+      let(:binding) { TOPLEVEL_BINDING }
+
+      it 'delegates to #resolve_gem' do
+        expect(command).to receive(:resolve_gem)
+        command.resolve_symbol(:foo)
+      end
+    end
+
+    context 'if called with a binding to anything else' do
+      let(:binding) { String.send(:eval, 'binding') }
+
+      it 'delegates to #resolve_regexp' do
+        expect(command).to receive(:resolve_regexp)
+        command.resolve_symbol(:foo)
+      end
+    end
+  end
+
   describe '#resolve_gem' do
-    it 'returns nil for non-exisiting gem' do
+    it 'returns nil for non-existing gems' do
       expect(command.resolve_gem(:foo)).to eq nil
     end
 
