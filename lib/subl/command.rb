@@ -29,7 +29,7 @@ module Subl
     end
 
     def resolve_symbol(name)
-      if original_binding.class.in?([::Object, ::NilClass])
+      if [::Object, ::NilClass].include?(original_binding.class)
         resolve_gem(name)
       else
         resolve_regexp(/^#{name}$/) 
